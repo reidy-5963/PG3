@@ -1,25 +1,48 @@
-#include <stdio.h>
+﻿#include <stdio.h>
 
 
-int Wage() {
-	return 1072;
+int Wage(int hour) {
+	return 1072 * hour;
 }
 
 int Wage(int hour, int wage) {
-	int result = 0;
-	if (wage == 0) {
-		result = 100;
+	int result{};
+	if (hour >= 1) {
+		hour -= 1;
+		if (wage == 0) {
+			wage = 100;	
+			printf_s("ノコリ %d ジカン,チンギン %d\n",hour, wage);
+
+			result = Wage(hour, wage);
+		}
+		else {
+			wage += (wage * 2) - 50;
+			printf_s("ノコリ %d ジカン,チンギン %d\n", hour, wage);
+
+			result = Wage(hour, wage);
+		}
 	}
 	else {
-		result = wage * 2 - 50;
-	}
-	printf_s("%d\n", result);
-	return Wage(hour - 1, result);
+		result = wage;
+	}		
+	return result;
 }
 
 int main() {
-	
-	printf_s("%d", Wage(5, 0));
+	int isWorkPatttarn = false;
+	int hour = 0;
+	printf_s("0 or 1 : ");
+	scanf_s("%d\n", &isWorkPatttarn);
+
+	printf_s("何時間働く? : ");
+	scanf_s("%d 時間\n", &hour);
+	if (isWorkPatttarn) {
+		printf_s("%d", Wage(hour, 0));
+	}
+	else {
+		printf_s("%d", Wage(hour));
+
+	}
 
 	return 0;
 }
