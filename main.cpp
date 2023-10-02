@@ -13,32 +13,25 @@ char Min(char a, char b) {
 }
 
 int main() {
-	int A = 50, B = 23;
-	float C = 39.0f, D = 85.5f;
-	double E = 26.0, F = 62.0;
-	char G = 'A', H = 'G';
+	int intA = 50, intB = 23;
+	float floatA = 39.0f, floatB = 85.5f;
+	double doubleA = 26.0, doubleB = 26.0;
+	char charA = 'A', charB = 'G';
 	
-	// int
-	printf_s("int Min(%d, %d) : ", A, B);
-	int AB = Min<int>(A, B);
-	printf_s("%d\n", AB);
+	// int	
+	int intAB = Min<int>(intA, intB);
+	printf_s("int Min(%d, %d) : %d\n", intA, intB, intAB);
 
-	// float
-	printf_s("float Min(%0.2f, %0.2f) : ", C, D);
-	float CD = Min<float>(C, D);
-
-	printf_s("%0.2f\n", CD);
+	// float	
+	float floatAB = Min<float>(floatA, floatB);
+	printf_s("float Min(%0.2f, %0.2f) : %0.2f\n", floatA, floatB, floatAB);
 
 	// double
-	printf_s("double Min(%0.2lf, %0.2lf) : ", E, F);	
-	double EF = Min<double>(E, F);
-	printf_s("%0.2lf\n", EF);
+	double doubleAB = Min<double>(doubleA, doubleB);
+	printf_s("double Min(%0.2lf, %0.2lf) : %0.2lf\n", doubleA, doubleB, doubleAB);
 
-	// char
-	printf_s("char Min(%c, %c) : ", G, H);
-	char GH = Min<char>(G, H);
-	printf_s("%c\n", GH);
-
+	// char	
+	Min<char>(charA, charB);
 
 	return 0;
 }
