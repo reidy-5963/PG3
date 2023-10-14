@@ -48,8 +48,15 @@ void WageComparison(int recursionWage, int generalWage) {
 int main() {
 	int hour = 0;
 
-	printf_s("何時間働く? : ");
+	printf_s("何時間働きますか?(少数は切り捨てられます) : ");
 	scanf_s("%d", &hour);
+	for (; hour < 0;) {
+		if (hour < 0) {
+			printf_s("範囲外です。負の数は入力できません。");
+			scanf_s("%d", &hour);
+		}
+
+	}
 
 	int recursionWage = Wage(hour, 0);
 	printf_s("再帰的な賃金体系\n");
