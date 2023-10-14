@@ -1,73 +1,84 @@
 ﻿#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+#include <Windows.h>
 
-//enum class WorkPattern{
-//	General,	// 一般
-//	Recursion	// 再帰
-//};
+typedef void (*PFunc)(int);
 
-int Wage(int hour) {
-	return 1072 * hour;
+enum class Dice {
+	Even,	// 偶数
+	Odd		// 奇数
+};
+enum class Answer {
+	Yes,	// はい
+	No		// いいえ
+};
+void DispResult(int* s) {
+	printf_s("%d秒まって実行されたよ\n", *s);
 }
 
-int Wage(int hour, int wage) {
-	int result{};
-	if (hour >= 1) {
-		hour -= 1;
-		if (wage == 0) {
-			wage = 100;	
-			//printf_s("ノコリ %d ジカン,チンギン %d\n",hour, wage);
-
-			result = Wage(hour, wage);
-		}
-		else {
-			wage += (wage * 2) - 50;
-			//printf_s("ノコリ %d ジカン,チンギン %d\n", hour, wage);
-
-			result = Wage(hour, wage);
-		}
-	}
-	else {
-		result = wage;
-	}		
-	return result;
+void setTimeout(PFunc p, int second, int answer) {
+	Sleep(second * 1000);
+	
+	p(answer);
 }
 
-void WageComparison(int recursionWage, int generalWage) {
-	if (recursionWage > generalWage) {
-		int tmp = recursionWage - generalWage;
-		printf_s("再帰的な賃金の方が %d 円高い\n", tmp);
+int RundomDice() {
+	return 1 + rand() % 6;
+}
+
+void DiceGame(int answer) {
+	int check = 0;
+	int diceNum = RundomDice();
+
+	// 出目が偶数なら0 奇数なら1
+	check = diceNum % 2;
+
+	printf_s("サイコロの出目 : %d\n", diceNum);
+	Sleep(1 * 1000);
+
+	if (check == int(Dice::Even)) {
+		printf_s("出目は丁\n");
 	}
-	else if (generalWage > recursionWage) {
-		int tmp = generalWage - recursionWage;
-		printf_s("一般的な賃金の方が %d 円高い\n", tmp);
+	else if (check == int(Dice::Odd)) {
+		printf_s("出目は半\n");
 	}
-	else {
-		printf_s("どちらも同じ賃金をもらえる\n");
+
+	Sleep(1 * 1000);
+
+	if (answer == check) {
+		printf_s("おめでとう! あなたは運があるね");
+	}
+	else if (answer != check) {
+		printf_s("残念！ あなたは運がない");
 	}
 }
 int main() {
-	int hour = 0;
+	srand((unsigned)time(nullptr));
+	int isEvenOrOdd = 0;
+	int isYesOrNo = int(Answer::No);
 
-	printf_s("何時間働きますか?(少数は切り捨てられます) : ");
-	scanf_s("%d", &hour);
-	for (; hour < 0;) {
-		if (hour < 0) {
-			printf_s("範囲外です。負の数は入力できません。");
-			scanf_s("%d", &hour);
+	for (; isYesOrNo == int(Answer::No);) {
+		printf_s("丁(偶数)か半(奇数)か\n丁なら0を、半なら1を押してください\n");
+		scanf_s("%d", &isEvenOrOdd);
+		for (; (isEvenOrOdd < int(Dice::Even) || isEvenOrOdd > int(Dice::Odd));) {
+			printf_s("範囲外の回答です。もう一度お願いします。\n");
+			scanf_s("%d", &isEvenOrOdd);
+
 		}
+		printf_s("ファイナルアンサー? はい : 0, いいえ : 1\n");
+		scanf_s("%d", &isYesOrNo);
+		for (; (isYesOrNo < int(Answer::Yes) || isYesOrNo > int(Answer::No));) {
+			printf_s("範囲外の回答です。もう一度お願いします。\n");
+			scanf_s("%d", &isYesOrNo);
 
+		}
 	}
 
-	int recursionWage = Wage(hour, 0);
-	printf_s("再帰的な賃金体系\n");
-	printf_s("%d 円\n", recursionWage);
 
-	int generalWage = Wage(hour);
-	printf_s("一般敵な賃金体系\n");
-	printf_s("%d 円\n\n", generalWage);
-
-	// どちらの賃金体系がいいのかの比較
-	WageComparison(recursionWage, generalWage);
+	PFunc p;
+	p = DiceGame;
+	setTimeout(p, 3, isEvenOrOdd);
 
 	return 0;
 }
