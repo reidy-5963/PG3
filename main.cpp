@@ -10,26 +10,19 @@ int Wage(int hour) {
 }
 
 int Wage(int hour, int wage) {
-	int result{};
-	if (hour >= 1) {
-		hour -= 1;
+	int tmp = 0;
+	if (hour > 0) {
+		hour--;
 		if (wage == 0) {
-			wage = 100;	
-			//printf_s("ノコリ %d ジカン,チンギン %d\n",hour, wage);
-
-			result = Wage(hour, wage);
+			wage = 100;
 		}
 		else {
-			wage += (wage * 2) - 50;
-			//printf_s("ノコリ %d ジカン,チンギン %d\n", hour, wage);
-
-			result = Wage(hour, wage);
+			tmp = wage;
+			wage  = tmp * 2 - 50;
 		}
+		return tmp + Wage(hour, wage);
 	}
-	else {
-		result = wage;
-	}		
-	return result;
+	return wage;
 }
 
 void WageComparison(int recursionWage, int generalWage) {
@@ -55,12 +48,11 @@ int main() {
 			printf_s("範囲外です。負の数は入力できません。");
 			scanf_s("%d", &hour);
 		}
-
 	}
 
 	int recursionWage = Wage(hour, 0);
 	printf_s("再帰的な賃金体系\n");
-	printf_s("%d 円\n", recursionWage);
+	printf_s("%d 円\n\n", recursionWage);
 
 	int generalWage = Wage(hour);
 	printf_s("一般敵な賃金体系\n");
