@@ -10,14 +10,13 @@ int Wage(int hour) {
 }
 
 int Wage(int hour, int wage) {
-	int tmp = 0;
+	int tmp = wage;
 	if (hour > 0) {
 		hour--;
 		if (wage == 0) {
 			wage = 100;
 		}
 		else {
-			tmp = wage;
 			wage  = tmp * 2 - 50;
 		}
 		return tmp + Wage(hour, wage);
