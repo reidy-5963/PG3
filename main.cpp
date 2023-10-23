@@ -5,11 +5,11 @@
 //	Recursion	// 再帰
 //};
 
-int Wage(int hour) {
+int CalcGeneralWage(int hour) {
 	return 1072 * hour;
 }
 
-int Wage(int hour, int wage) {
+int CalcRecursiveWage(int hour, int wage) {
 	int tmp = wage;
 	if (hour > 0) {
 		hour--;
@@ -19,7 +19,7 @@ int Wage(int hour, int wage) {
 		else {
 			wage  = tmp * 2 - 50;
 		}
-		return tmp + Wage(hour, wage);
+		return tmp + CalcRecursiveWage(hour, wage);
 	}
 	return wage;
 }
@@ -49,11 +49,11 @@ int main() {
 		}
 	}
 
-	int recursionWage = Wage(hour, 0);
+	int recursionWage = CalcRecursiveWage(hour, 0);
 	printf_s("再帰的な賃金体系\n");
 	printf_s("%d 円\n\n", recursionWage);
 
-	int generalWage = Wage(hour);
+	int generalWage = CalcGeneralWage(hour);
 	printf_s("一般敵な賃金体系\n");
 	printf_s("%d 円\n\n", generalWage);
 
