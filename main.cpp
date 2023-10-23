@@ -10,18 +10,20 @@ enum class Dice {
 	Even = 1,	// 偶数
 	Odd = 2		// 奇数
 };
+
 enum class Answer {
 	Yes = 1,	// はい
 	No = 2		// いいえ
 };
-void DispResult(int* s) {
-	printf_s("%d秒まって実行されたよ\n", *s);
-}
 
-void setTimeout(PFunc p, int second, int answer) {
+//void DispResult(int* s) {
+//	printf_s("%d秒まって実行されたよ\n", *s);
+//}
+
+void setTimeout(PFunc p, int second, int selectEvenorOdd) {
 	Sleep(second * 1000);
 
-	p(answer);
+	p(selectEvenorOdd);
 }
 
 int RundomDice() {
@@ -59,29 +61,30 @@ int main() {
 	srand((unsigned)time(nullptr));
 	int isEvenOrOdd = 0;
 	int isYesOrNo = int(Answer::No);
-
-	for (; isYesOrNo == int(Answer::No);) {
-		printf_s("丁(偶数)か半(奇数)か\n丁なら1を、半なら2を押してください\n");
-		scanf_s("%d", &isEvenOrOdd);
-		for (; (isEvenOrOdd < int(Dice::Even) || isEvenOrOdd > int(Dice::Odd));) {
-			printf_s("範囲外の回答です。もう一度お願いします。\n");
+	std::function<void(int)> allFunction = [=](int isEvenOrOdd) {
+		for (; isYesOrNo == int(Answer::No);) {
+			printf_s("丁(偶数)か半(奇数)か\n丁なら1を、半なら2を押してください\n");
 			scanf_s("%d", &isEvenOrOdd);
+			for (; (isEvenOrOdd < int(Dice::Even) || isEvenOrOdd > int(Dice::Odd));) {
+				printf_s("範囲外の回答です。もう一度お願いします。\n");
+				scanf_s("%d", &isEvenOrOdd);
 
-		}
-		printf_s("ファイナルアンサー? はい : 1, いいえ : 2\n");
-		scanf_s("%d", &isYesOrNo);
-		for (; (isYesOrNo < int(Answer::Yes) || isYesOrNo > int(Answer::No));) {
-			printf_s("範囲外の回答です。もう一度お願いします。\n");
+			}
+			printf_s("ファイナルアンサー? はい : 1, いいえ : 2\n");
 			scanf_s("%d", &isYesOrNo);
+			for (; (isYesOrNo < int(Answer::Yes) || isYesOrNo > int(Answer::No));) {
+				printf_s("範囲外の回答です。もう一度お願いします。\n");
+				scanf_s("%d", &isYesOrNo);
 
+			}
 		}
-	}
-	std::function<void(int)> afunc = [=](int isEvenOrOdd) {
+
 		PFunc p;
 		p = DiceGame;
 
 		setTimeout(p, 3, isEvenOrOdd);
 	};
-	afunc(isEvenOrOdd);
+	
+	allFunction(isEvenOrOdd);
 	return 0;
 }
