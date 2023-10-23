@@ -24,32 +24,31 @@ void setTimeout(PFunc p, int second, int answer) {
 }
 
 int RundomDice() {
-	return 1 + rand() % 6;
+	return 1 + rand() % 2;
 }
 
 void DiceGame(int answer) {
-	int check = 0;
+	//int check = 0;
 	int diceNum = RundomDice();
 
 	// 出目が偶数なら0 奇数なら1
-	check = diceNum % 2;
+	//check = diceNum % 2;
+	//printf_s("サイコロの出目 : %d\n", diceNum);
+	//Sleep(1 * 1000);
 
-	printf_s("サイコロの出目 : %d\n", diceNum);
-	Sleep(1 * 1000);
-
-	if (check == int(Dice::Even)) {
+	if (diceNum == int(Dice::Even)) {
 		printf_s("出目は丁\n");
 	}
-	else if (check == int(Dice::Odd)) {
+	else if (diceNum == int(Dice::Odd)) {
 		printf_s("出目は半\n");
 	}
 
 	Sleep(1 * 1000);
 
-	if (answer == check) {
+	if (answer == diceNum) {
 		printf_s("おめでとう! あなたは運があるね");
 	}
-	else if (answer != check) {
+	else if (answer != diceNum) {
 		printf_s("残念！ あなたは運がない");
 	}
 }
