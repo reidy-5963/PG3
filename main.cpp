@@ -13,9 +13,6 @@ enum class Answer {
 	Yes,	// はい
 	No		// いいえ
 };
-void DispResult(int* s) {
-	printf_s("%d秒まって実行されたよ\n", *s);
-}
 
 void setTimeout(PFunc p, int second, int answer) {
 	Sleep(second * 1000);
@@ -27,14 +24,8 @@ int RundomDice() {
 	return 1 + rand() % 2;
 }
 
-void DiceGame(int answer) {
-	//int check = 0;
+void DisplayDice(int answer) {
 	int diceNum = RundomDice();
-
-	// 出目が偶数なら0 奇数なら1
-	//check = diceNum % 2;
-	//printf_s("サイコロの出目 : %d\n", diceNum);
-	//Sleep(1 * 1000);
 
 	if (diceNum == int(Dice::Even)) {
 		printf_s("出目は丁\n");
