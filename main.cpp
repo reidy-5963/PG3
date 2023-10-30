@@ -67,7 +67,7 @@ int main() {
 
 
 	PFunc p;
-	p = DiceGame;
+	p = DisplayDice;
 	setTimeout(p, 3, isEvenOrOdd);
 
 	return 0;
