@@ -6,43 +6,19 @@
 
 typedef void (*PFunc)(int);
 
-enum class Dice {
-	Even = 1,	// 偶数
-	Odd = 2		// 奇数
-};
-
-enum class Answer {
-	Yes = 1,	// はい
-	No = 2		// いいえ
-};
-
-//void DispResult(int* s) {
-//	printf_s("%d秒まって実行されたよ\n", *s);
-//}
-
-void setTimeout(PFunc p, int second, int selectEvenorOdd) {
+std::function<void(int)> setTimeout(int second, PFunc p) {
 	Sleep(second * 1000);
 
-	p(selectEvenorOdd);
+	return [p](int answer) { p(answer); };
 }
 
-int RundomDice() {
-	return 1 + rand() % 2;
-}
+void DisplayDice(int answer) {
+	int diceNum = 1 + rand() % 2;
 
-void DiceGame(int answer) {
-	//int check = 0;
-	int diceNum = RundomDice();
-
-	// 出目が偶数なら0 奇数なら1
-	//check = diceNum % 2;
-	//printf_s("サイコロの出目 : %d\n", diceNum);
-	//Sleep(1 * 1000);
-
-	if (diceNum == int(Dice::Even)) {
+	if (diceNum == 0) {
 		printf_s("出目は丁\n");
 	}
-	else if (diceNum == int(Dice::Odd)) {
+	else if (diceNum == 1) {
 		printf_s("出目は半\n");
 	}
 
@@ -56,35 +32,31 @@ void DiceGame(int answer) {
 	}
 }
 
-
 int main() {
 	srand((unsigned)time(nullptr));
 	int isEvenOrOdd = 0;
-	int isYesOrNo = int(Answer::No);
-	std::function<void(int)> allFunction = [=](int isEvenOrOdd) {
-		for (; isYesOrNo == int(Answer::No);) {
-			printf_s("丁(偶数)か半(奇数)か\n丁なら1を、半なら2を押してください\n");
+	int isYesOrNo = 1;
+
+	for (; isYesOrNo == 1;) {
+		printf_s("丁(偶数)か半(奇数)か\n丁なら0を、半なら1を押してください\n");
+		scanf_s("%d", &isEvenOrOdd);
+		for (; (isEvenOrOdd < 0 || isEvenOrOdd > 1);) {
+			printf_s("範囲外の回答です。もう一度お願いします。\n");
 			scanf_s("%d", &isEvenOrOdd);
-			for (; (isEvenOrOdd < int(Dice::Even) || isEvenOrOdd > int(Dice::Odd));) {
-				printf_s("範囲外の回答です。もう一度お願いします。\n");
-				scanf_s("%d", &isEvenOrOdd);
 
-			}
-			printf_s("ファイナルアンサー? はい : 1, いいえ : 2\n");
-			scanf_s("%d", &isYesOrNo);
-			for (; (isYesOrNo < int(Answer::Yes) || isYesOrNo > int(Answer::No));) {
-				printf_s("範囲外の回答です。もう一度お願いします。\n");
-				scanf_s("%d", &isYesOrNo);
-
-			}
 		}
+		printf_s("ファイナルアンサー? はい : 0, いいえ : 1\n");
+		scanf_s("%d", &isYesOrNo);
+		for (; (isYesOrNo < 0 || isYesOrNo > 1);) {
+			printf_s("範囲外の回答です。もう一度お願いします。\n");
+			scanf_s("%d", &isYesOrNo);
 
-		PFunc p;
-		p = DiceGame;
+		}
+	}
+	PFunc p;
+	p = DisplayDice;
+	auto diceGame = setTimeout(3, p);
 
-		setTimeout(p, 3, isEvenOrOdd);
-	};
-	
-	allFunction(isEvenOrOdd);
+	diceGame(isEvenOrOdd);
 	return 0;
 }
