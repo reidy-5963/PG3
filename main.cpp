@@ -1,67 +1,49 @@
 ﻿#include <stdio.h>
 
-/// <summary>
-/// 楽器
-/// </summary>
-class MusicalInstrument {
+class IShape {
 public:
-	MusicalInstrument() {};
-	virtual ~MusicalInstrument() {};
+	IShape() {};
+	~IShape() {};
 
-	// 音だし
-	virtual void MakeSound() {};
+	virtual void size() = 0;
 
-private:
+	virtual void draw() = 0;
+protected:
+	float radius_ = 0.0f;
+	float area_ = 0.0f;
 };
 
-// トランペット
-class Trumpet : public MusicalInstrument {
+class Circle : public IShape {
 public:
-	Trumpet() {};
-	~Trumpet() override { printf_s("トランペットを片付けた\n"); };
+	Circle(float rad) { radius_ = rad; };
+	~Circle() {};
 
-	// 音だし
-	void MakeSound() override { printf_s("華やかなトランペットの音色\n"); };
+	void size() override { area_ = radius_ * radius_ * 3.14f; };
 
-private:
+	void draw() override { printf_s("円 : 面積は %f です\n", area_); };
 };
 
-// トロンボーン
-class Trombone : public MusicalInstrument {
+class Rectangle : public IShape {
 public:
-	Trombone() {};
-	~Trombone() override { printf_s("トロンボーンを片付けた\n"); };
+	Rectangle(float rad) { radius_ = rad; };
+	~Rectangle() {};
 
-	// 音だし
-	void MakeSound() override { printf_s("厳かなトロンボーンの音色\n"); };
+	void size() override { area_ = (radius_ * 2) * (radius_ * 2); };
 
-private:
+	void draw() override { printf_s("矩形 : 面積は %f です\n", area_); };
 };
 
 int main() {
-	// 楽器の数
-	const int musicalInstrumentMax = 3;
-	MusicalInstrument* musicalInstruments[musicalInstrumentMax];
+	IShape* shapes[2];
+	shapes[0] = new Circle(5.0f);
+	shapes[1] = new Rectangle(5.0f);
 
-	for (int i = 0; i < musicalInstrumentMax; i++) {
-		if (i < 1) {
-			musicalInstruments[i] = new Trumpet;
-		}
-		else {
-			musicalInstruments[i] = new Trombone;
-		}
-	}
-
-	for (int i = 0; i < musicalInstrumentMax; i++) {
-		printf_s("%d人目の人の音だし\n", i + 1);
-		musicalInstruments[i]->MakeSound();
+	for (int i = 0; i < 2; i++) {
+		shapes[i]->size();
+		shapes[i]->draw();
 		printf_s("\n");
-
 	}
 
-	for (int i = 0; i < musicalInstrumentMax; i++) {
-		delete musicalInstruments[i];
-	}
 
 	return 0;
 }
