@@ -1,55 +1,67 @@
 ﻿#include <stdio.h>
 
-class Enemy {
+/// <summary>
+/// 楽器
+/// </summary>
+class MusicalInstrument {
 public:
-	enum class State {
-		NEAR,
-		SHOT,
-		LEAVE
-	};
-	void Initialize();
-	void Update();
-	void Draw();
+	MusicalInstrument() {};
+	virtual ~MusicalInstrument() {};
 
-	void NearState();
-	void ShotState();
-	void LeaveState();
+	// 音だし
+	virtual void MakeSound() {};
 
 private:
-	State state_ = State::NEAR;
-	static void (Enemy::* stateFuncTable[])();
-
-
-};
-void (Enemy::* stateFuncTable[])() = {
-	&Enemy::NearState,
-	&Enemy::ShotState,
-	&Enemy::LeaveState
 };
 
-void Enemy::Initialize() {
-}
+// トランペット
+class Trumpet : public MusicalInstrument {
+public:
+	Trumpet() {};
+	~Trumpet() override { printf_s("トランペットを片付けた\n"); };
 
-void Enemy::Update() {
-	(this->*stateFuncTable[static_cast<size_t>(state_)]());
-}
+	// 音だし
+	void MakeSound() override { printf_s("華やかなトランペットの音色\n"); };
 
-void Enemy::Draw() {
-}
+private:
+};
 
-void Enemy::NearState() {
-	printf_s("近接");
+// トロンボーン
+class Trombone : public MusicalInstrument {
+public:
+	Trombone() {};
+	~Trombone() override { printf_s("トロンボーンを片付けた\n"); };
 
-}
-void Enemy::ShotState() {
+	// 音だし
+	void MakeSound() override { printf_s("厳かなトロンボーンの音色\n"); };
 
-}
-void Enemy::LeaveState() {
-
-}
-
+private:
+};
 
 int main() {
-	
+	// 楽器の数
+	const int musicalInstrumentMax = 3;
+	MusicalInstrument* musicalInstruments[musicalInstrumentMax];
+
+	for (int i = 0; i < musicalInstrumentMax; i++) {
+		if (i < 1) {
+			musicalInstruments[i] = new Trumpet;
+		}
+		else {
+			musicalInstruments[i] = new Trombone;
+		}
+	}
+
+	for (int i = 0; i < musicalInstrumentMax; i++) {
+		printf_s("%d人目の人の音だし\n", i + 1);
+		musicalInstruments[i]->MakeSound();
+		printf_s("\n");
+
+	}
+
+	for (int i = 0; i < musicalInstrumentMax; i++) {
+		delete musicalInstruments[i];
+	}
+
 	return 0;
 }
