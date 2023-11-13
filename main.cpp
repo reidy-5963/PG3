@@ -21,19 +21,19 @@ public:
 };
 
 int main() {
-	Calc<int, int> min_i2i(20, 21);
-	Calc<float, float> min_f2f(20.0f, 20.1f);
-	Calc<double, double> min_d2d(20.13, 20.2);
-	Calc<float, int> min_f2i(20.2f, 20);
-	Calc<double, int> min_d2i(20.6, 21);
-	Calc<double, float> min_d2f(20.1, 20.12f);
+	Calc<int, int> min_int2int(20, 21);
+	Calc<float, float> min_float2float(20.0f, 20.1f);
+	Calc<double, double> min_double2double(20.13, 20.2);
+	Calc<float, int> min_float2int(20.2f, 20);
+	Calc<double, int> min_double2int(20.6, 21);
+	Calc<double, float> min_double2float(20.1, 20.12f);
 
 
-	printf_s("int (%d), int (%d)\n Min = %d\n\n",min_i2i.numA_, min_i2i.numB_, min_i2i.Min());
-	printf_s("float (%.2f), float (%.2f)\n Min = %.2f\n\n", min_f2f.numA_, min_f2f.numB_, min_f2f.Min());
-	printf_s("double (%.2lf), double (%.2lf)\n Min = %.2lf\n\n", min_d2d.numA_, min_d2d.numB_, min_d2d.Min());
-	printf_s("float (%.2f), int (%d)\n Min = %.2f\n\n", min_f2i.numA_, min_f2i.numB_, min_f2i.Min());
-	printf_s("double (%.2lf), int (%d)\n Min = %.2lf\n\n", min_d2i.numA_, min_d2i.numB_, min_d2i.Min());
-	printf_s("double (%.2lf), float (%.2f)\n Min = %.2lf\n\n", min_d2f.numA_, min_d2f.numB_, min_d2f.Min());
+	printf_s("int (%d), int (%d)\n Min = %d\n\n", min_int2int.numA_, min_int2int.numB_, min_int2int.Min());
+	printf_s("float (%.2f), float (%.2f)\n Min = %.2f\n\n", min_float2float.numA_, min_float2float.numB_, min_float2float.Min());
+	printf_s("double (%.2lf), double (%.2lf)\n Min = %.2lf\n\n", min_double2double.numA_, min_double2double.numB_, min_double2double.Min());
+	printf_s("float (%.2f), int (%d)\n Min = %.2f\n\n", min_float2int.numA_, min_float2int.numB_, min_float2int.Min());
+	printf_s("double (%.2lf), int (%d)\n Min = %.2lf\n\n", min_double2int.numA_, min_double2int.numB_, min_double2int.Min());
+	printf_s("double (%.2lf), float (%.2f)\n Min = %.2lf\n\n", min_double2float.numA_, min_double2float.numB_, min_double2float.Min());
 	return 0;
 }
