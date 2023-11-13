@@ -2,12 +2,12 @@
 
 template <typename T1, typename T2>
 
-class ClassTemp {
+class Pair {
 public:
 	T1 numA_;
 	T2 numB_;
 
-	ClassTemp(T1 numA, T2 numB) : numA_(numA), numB_(numB) {}
+	Pair(T1 numA, T2 numB) : numA_(numA), numB_(numB) {}
 
 	T1 Min() {
 		if (numA_ >= numB_) {
@@ -21,12 +21,12 @@ public:
 };
 
 int main() {
-	ClassTemp<int, int> min_i2i(20, 21);
-	ClassTemp<float, float> min_f2f(20.0f, 20.1f);
-	ClassTemp<double, double> min_d2d(20.13, 20.2);
-	ClassTemp<float, int> min_f2i(20.2f, 20);
-	ClassTemp<double, int> min_d2i(20.6, 21);
-	ClassTemp<double, float> min_d2f(20.1, 20.12f);
+	Pair<int, int> min_i2i(20, 21);
+	Pair<float, float> min_f2f(20.0f, 20.1f);
+	Pair<double, double> min_d2d(20.13, 20.2);
+	Pair<float, int> min_f2i(20.2f, 20);
+	Pair<double, int> min_d2i(20.6, 21);
+	Pair<double, float> min_d2f(20.1, 20.12f);
 
 
 	printf_s("int (%d), int (%d)\n Min = %d\n\n",min_i2i.numA_, min_i2i.numB_, min_i2i.Min());
