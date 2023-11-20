@@ -55,7 +55,7 @@ int main() {
 	}
 	PFunc p;
 	p = DisplayDice;
-	auto diceGame = setTimeout(3, p);
+	auto diceGame = SetTimeOut(3, p);
 
 	diceGame(isEvenOrOdd);
 	return 0;
