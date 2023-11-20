@@ -6,7 +6,7 @@
 
 typedef void (*PFunc)(int);
 
-std::function<void(int)> setTimeout(int second, PFunc p) {
+std::function<void(int)> SetTimeout(int second, PFunc p) {
 	Sleep(second * 1000);
 
 	return [p](int answer) { p(answer); };
